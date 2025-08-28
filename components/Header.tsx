@@ -16,7 +16,7 @@ const BpiLogo = () => (
    
     
     <a href="https://www.bpi.com.ph/" className="font-medium hover:underline ml-1">
-         <img src="../BPI_logo_red.png" alt="BPI Logo" className="font-medium hover:underline ml-1" width="50" height="50" border-radius= "50px" />
+         <img src="../photos/BPI_logo_red.png" alt="BPI Log" className="font-medium hover:underline ml-1" width="50" height="50" border-radius= "50px" />
      </a>
     
   </div>
