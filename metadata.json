@@ -1,0 +1,5 @@
+{
+  "name": "Copy of BPI API Portal",
+  "description": "A modern, responsive web application for exploring the BPI API catalog, built with React and Tailwind CSS. It features a dynamic interface for both registered and non-registered users to discover and learn about available APIs.",
+  "requestFramePermissions": []
+}
