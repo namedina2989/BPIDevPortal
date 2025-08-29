@@ -53,7 +53,7 @@ const App: React.FC = () => {
       case 'register':
         return <RegisterPage setCurrentPage={setCurrentPage} onRegister={handleRegistration} onOpenTerms={openTermsModal} />;
       case 'registration-success':
-        return <RegistrationSuccessPage />;
+        return <RegistrationSuccessPage setCurrentPage={setCurrentPage} />;
       case 'bills-payment':
         return <BillsPaymentPage setCurrentPage={setCurrentPage} />;
       case 'fund-transfer':
