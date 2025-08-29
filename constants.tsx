@@ -43,7 +43,7 @@ export const APIS: ApiData[] = [
   },
   {
     id: '3',
-    name: 'Fund Top-Up',
+    name: 'Fund Transfer',
     version: 'API V2.1.0',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     category: 'Transfer',
@@ -113,5 +113,15 @@ export const APIS: ApiData[] = [
     category: 'Authorizations',
     isComingSoon: false,
     icon: <KeyIcon className="w-8 h-8 text-bpi-red" />,
+  },
+  {
+    id: '11',
+    name: 'Open Banking Core',
+    version: 'API V2.0.16',
+    description: 'Core infrastructure for Open Banking, including authorization, account access, and partner onboarding.',
+    category: 'Authorizations',
+    isComingSoon: false,
+    icon: <KeyIcon className="w-8 h-8 text-bpi-red" />,
+    pageLink: 'open-banking',
   },
 ];

@@ -1,4 +1,5 @@
 
+
 import React, { useState, useCallback } from 'react';
 import { Header } from './components/Header';
 import { HomePage } from './pages/HomePage';
@@ -12,6 +13,7 @@ import { RegisterPage } from './pages/RegisterPage';
 import { BillsPaymentPage } from './pages/BillsPaymentPage';
 import { FundTransferPage } from './pages/FundTransferPage';
 import { RegistrationSuccessPage } from './pages/RegistrationSuccessPage';
+import { OpenBankingPage } from './pages/OpenBankingPage';
 import { Page } from './types';
 
 const App: React.FC = () => {
@@ -58,13 +60,15 @@ const App: React.FC = () => {
         return <BillsPaymentPage setCurrentPage={setCurrentPage} />;
       case 'fund-transfer':
         return <FundTransferPage setCurrentPage={setCurrentPage} />;
+      case 'open-banking':
+        return <OpenBankingPage setCurrentPage={setCurrentPage} />;
       default:
         return <HomePage setCurrentPage={setCurrentPage} />;
     }
   };
 
   const mainBgClass = () => {
-    if (['get-started', 'bills-payment', 'documentation', 'fund-transfer'].includes(currentPage)) return 'bg-white';
+    if (['get-started', 'bills-payment', 'documentation', 'fund-transfer', 'open-banking'].includes(currentPage)) return 'bg-white';
     return 'bg-white';
   }
 
@@ -96,8 +100,8 @@ const App: React.FC = () => {
 };
 
 const Footer: React.FC<{ setCurrentPage: (page: Page) => void; currentPage: Page; onOpenTerms: () => void; }> = ({ setCurrentPage, currentPage, onOpenTerms }) => {
-    const footerBgClass = ['bills-payment', 'documentation', 'fund-transfer'].includes(currentPage) ? 'bg-gray-100' : 'bg-gray-50';
-    const textColorClass = ['bills-payment', 'documentation', 'fund-transfer'].includes(currentPage) ? 'text-gray-600' : 'text-gray-500';
+    const footerBgClass = ['bills-payment', 'documentation', 'fund-transfer', 'open-banking'].includes(currentPage) ? 'bg-gray-100' : 'bg-gray-50';
+    const textColorClass = ['bills-payment', 'documentation', 'fund-transfer', 'open-banking'].includes(currentPage) ? 'text-gray-600' : 'text-gray-500';
 
     return (
         <footer className={`${footerBgClass} border-t border-gray-200`}>

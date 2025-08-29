@@ -1,4 +1,5 @@
 
+
 import React, { useState } from 'react';
 import { Page } from '../types';
 import { ChevronDownIcon, QuestionMarkCircleIcon } from '../components/Icons';
@@ -557,6 +558,15 @@ const ApiContractDocumentation: React.FC = () => {
                     <h1 className="text-4xl font-black text-gray-900 mb-2">BPI PARTNER API 2.0</h1>
                     <p className="text-lg text-gray-500 mb-8">API Contract 2.0.16</p>
 
+                    <DocSection title="Revision History">
+                        <DocTable headers={["Version", "Date", "Author", "Changes"]}>
+                            <tr><td className="px-4 py-2">1.0.2</td><td className="px-4 py-2">01/15/2024</td><td className="px-4 py-2">Marc Amorsolo</td><td className="px-4 py-2">Initial Draft</td></tr>
+                            <tr><td className="px-4 py-2">1.0.3</td><td className="px-4 py-2">01/22/2024</td><td className="px-4 py-2">Marc Amorsolo</td><td className="px-4 py-2">Re-sized Scope/s and basepaths</td></tr>
+                            <tr><td className="px-4 py-2">1.0.4</td><td className="px-4 py-2">02/12/2024</td><td className="px-4 py-2">Marc Amorsolo</td><td className="px-4 py-2">Added Reversal to the FundTopUp Journey</td></tr>
+                            <tr><td className="px-4 py-2">1.0.5</td><td className="px-4 py-2">03/18/2024</td><td className="px-4 py-2">Marc Amorsolo</td><td className="px-4 py-2">Removed reversal on the FundTopUp Journey</td></tr>
+                        </DocTable>
+                    </DocSection>
+
                     <DocSection title="Open Banking">
                         <p>The Open Banking initiative, is a BPI initiated project to build an Open API infrastructure to meet following business requirement(s):</p>
                         <ul className="list-disc pl-6 space-y-2">
@@ -628,11 +638,59 @@ const ApiContractDocumentation: React.FC = () => {
     -d 'client_id=REPLACE_WITH_CLIENT_ID&client_secret=REPLACE_WITH_CLIENT_SECRET&grant_type=authorization_code&code=REPLACE_WITH_CODE '`} language="bash"/>
                         </SubHeading>
                     </DocSection>
+
+                    <DocSection title="Accounts">
+                        <SubHeading title="Base path for Accounts">
+                             <CodeBlock code={`/bpi/api`} language="text" />
+                        </SubHeading>
+                        <SubHeading title="[GET] /transactionalAccounts">
+                            <p>This endpoint returns the list of active Consumer and Savings accounts for the Client held with BPI.</p>
+                            <h4 className="font-semibold mt-4">Header</h4>
+                            <DocTable headers={["Parameter Name", "Data Type", "Description", "Sample Value"]}>
+                                <tr><td className="px-4 py-2">Authorization</td><td className="px-4 py-2">String</td><td className="px-4 py-2">Bearer access token</td><td className="px-4 py-2 font-mono">Bearer a-AbC123...</td></tr>
+                                <tr><td className="px-4 py-2">x-ibm-client-id</td><td className="px-4 py-2">String</td><td className="px-4 py-2">Client ID issued as part of the onboarding</td><td className="px-4 py-2 font-mono">...</td></tr>
+                            </DocTable>
+                             <h4 className="font-semibold mt-4">Sample Response (HTTP Code: 200)</h4>
+                             <CodeBlock code={`{
+    "status": "success",
+    "code": "0",
+    "description": "Success",
+    "body": {
+        "transactionalAccounts": [
+            {
+                "accountNumber": "533XXXXX7899",
+                "accountNumberToken": "933ef8e8722b0761cdc8efba0dd40b9a",
+                "displayOrder": "001",
+                "accountPreferredName": "MY CHECKING ACCOUNT",
+                "institution": "BPI",
+                "accountType": "CHECKING ACCOUNT"
+            }
+        ]
+    }
+}`} />
+                        </SubHeading>
+                    </DocSection>
+
+                     <DocSection title="Fund Top Up">
+                        <SubHeading title="Base path for Fund To Up">
+                            <CodeBlock code={`/api/fundTopUp`} language="text" />
+                        </SubHeading>
+
+                        <SubHeading title="[POST] /initiate">
+                            <p>This endpoint initiates the fund top up process...</p>
+                            <DocTable headers={["Field Name", "Required", "Data Type", "Length", "Description"]}>
+                                <tr><td className="px-4 py-2">merchantTransactionReference</td><td className="px-4 py-2">Yes</td><td className="px-4 py-2">String</td><td className="px-4 py-2">50</td><td className="px-4 py-2">Unique transaction reference from the merchant</td></tr>
+                                <tr><td className="px-4 py-2">accountNumberToken</td><td className="px-4 py-2">Yes</td><td className="px-4 py-2">String</td><td className="px-4 py-2">60-1000</td><td className="px-4 py-2">Token for the account number</td></tr>
+                                <tr><td className="px-4 py-2">amount</td><td className="px-4 py-2">Yes</td><td className="px-4 py-2">String</td><td className="px-4 py-2">100</td><td className="px-4 py-2">Amount in Local Currency</td></tr>
+                            </DocTable>
+                        </SubHeading>
+                    </DocSection>
                 </div>
             </div>
         </div>
     );
 };
+
 
 const fundTransferHistoryData = [
     {
@@ -652,7 +710,7 @@ const fundTransferHistoryData = [
     },
 ];
 
-const FundTransferApiHistory: React.FC = () => {
+const FundTransferApiHistory: React.FC<{ onViewDocumentation: () => void; }> = ({ onViewDocumentation }) => {
     return (
         <div className="bg-gray-50 py-12">
             <div className="container mx-auto px-6">
@@ -670,7 +728,10 @@ const FundTransferApiHistory: React.FC = () => {
                                 </div>
                                 <div className="sm:w-3/4">
                                     <p className="text-gray-700 leading-relaxed">{item.description}</p>
-                                    <button className="mt-3 text-sm font-semibold text-bpi-red hover:underline">
+                                    <button
+                                        onClick={onViewDocumentation}
+                                        className="mt-3 text-sm font-semibold text-bpi-red hover:underline"
+                                    >
                                         View Documentation &rarr;
                                     </button>
                                 </div>
@@ -749,7 +810,7 @@ export const FundTransferPage: React.FC<FundTransferPageProps> = ({ setCurrentPa
             {activeTab === 'documentation' && <FundTransferDocumentation />}
             {activeTab === 'playground' && <ApiPlayground />}
             {activeTab === 'contract' && <ApiContractDocumentation />}
-            {activeTab === 'history' && <FundTransferApiHistory />}
+            {activeTab === 'history' && <FundTransferApiHistory onViewDocumentation={() => setCurrentPage('open-banking')} />}
         </main>
     );
 };
