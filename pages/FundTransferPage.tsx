@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Page } from '../types';
 import { ChevronDownIcon, QuestionMarkCircleIcon } from '../components/Icons';
@@ -633,6 +634,55 @@ const ApiContractDocumentation: React.FC = () => {
     );
 };
 
+const fundTransferHistoryData = [
+    {
+        version: "v1.5.2",
+        date: "April 01, 2024",
+        description: "Increased transaction limits and added support for additional currencies.",
+    },
+    {
+        version: "v1.5.1",
+        date: "February 20, 2024",
+        description: "Introduced the `/reversal` endpoint to allow partners to programmatically reverse transactions. Improved response times for the `/status` endpoint.",
+    },
+    {
+        version: "v1.5.0",
+        date: "December 18, 2023",
+        description: "Initial release of the Fund Top Up API, enabling e-wallet top-ups from BPI accounts.",
+    },
+];
+
+const FundTransferApiHistory: React.FC = () => {
+    return (
+        <div className="bg-gray-50 py-12">
+            <div className="container mx-auto px-6">
+                <div className="bg-white p-8 rounded-lg shadow-md max-w-4xl mx-auto">
+                    <h1 className="text-3xl font-bold text-gray-900 mb-8 pb-4 border-b">Fund Top Up - API Version History</h1>
+                    <div className="space-y-8">
+                        {fundTransferHistoryData.map((item, index) => (
+                            <div key={index} className="flex flex-col sm:flex-row gap-6">
+                                <div className="sm:w-1/4">
+                                    <div className="flex items-center">
+                                        <span className={`text-lg font-bold ${index === 0 ? 'text-bpi-red' : 'text-gray-800'}`}>{item.version}</span>
+                                        {index === 0 && <span className="ml-3 bg-green-100 text-green-800 text-xs font-medium px-2.5 py-1 rounded-full">Latest</span>}
+                                    </div>
+                                    <p className="text-sm text-gray-500 mt-1">{item.date}</p>
+                                </div>
+                                <div className="sm:w-3/4">
+                                    <p className="text-gray-700 leading-relaxed">{item.description}</p>
+                                    <button className="mt-3 text-sm font-semibold text-bpi-red hover:underline">
+                                        View Documentation &rarr;
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 
 export const FundTransferPage: React.FC<FundTransferPageProps> = ({ setCurrentPage }) => {
     const [activeTab, setActiveTab] = useState('documentation');
@@ -682,6 +732,16 @@ export const FundTransferPage: React.FC<FundTransferPageProps> = ({ setCurrentPa
                         >
                             API Contract
                         </button>
+                        <button
+                            onClick={() => setActiveTab('history')}
+                            className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+                                activeTab === 'history'
+                                    ? 'border-bpi-red text-bpi-red'
+                                    : 'border-transparent text-gray-500 hover:text-gray-800 hover:border-gray-300'
+                            }`}
+                        >
+                            History
+                        </button>
                     </nav>
                 </div>
             </div>
@@ -689,6 +749,7 @@ export const FundTransferPage: React.FC<FundTransferPageProps> = ({ setCurrentPa
             {activeTab === 'documentation' && <FundTransferDocumentation />}
             {activeTab === 'playground' && <ApiPlayground />}
             {activeTab === 'contract' && <ApiContractDocumentation />}
+            {activeTab === 'history' && <FundTransferApiHistory />}
         </main>
     );
 };
