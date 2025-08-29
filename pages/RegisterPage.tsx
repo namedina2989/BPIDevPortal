@@ -4,7 +4,7 @@ import { CloseIcon } from '../components/Icons';
 
 interface RegisterPageProps {
     setCurrentPage: (page: Page) => void;
-    onSignIn: () => void;
+    onRegister: () => void;
     onOpenTerms: () => void;
 }
 
@@ -17,7 +17,13 @@ const BpiLogo = () => (
     </div>
 );
 
-export const RegisterPage: React.FC<RegisterPageProps> = ({ setCurrentPage, onSignIn, onOpenTerms }) => {
+export const RegisterPage: React.FC<RegisterPageProps> = ({ setCurrentPage, onRegister, onOpenTerms }) => {
+    
+    const handleFormSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        onRegister();
+    };
+
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
             <div className="w-full max-w-5xl bg-white rounded-lg shadow-2xl flex overflow-hidden relative">
@@ -47,7 +53,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ setCurrentPage, onSi
                     <h2 className="text-3xl font-bold text-gray-900 mb-2">Create Account</h2>
                     <p className="text-gray-500 mb-8">Let's get you started!</p>
                     
-                    <form onSubmit={(e) => e.preventDefault()}>
+                    <form onSubmit={handleFormSubmit}>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label htmlFor="first-name" className="block text-sm font-medium text-gray-700 mb-2">First Name</label>

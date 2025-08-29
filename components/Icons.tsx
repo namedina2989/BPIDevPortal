@@ -101,6 +101,12 @@ export const CloseIcon = ({ className = 'w-6 h-6' }: { className?: string }) => 
     </svg>
 );
 
+export const CheckCircleIcon = ({ className = 'w-12 h-12' }: { className?: string }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+    </svg>
+);
+
 export const EndpointsIcon = ({ className = 'w-16 h-16' }: { className?: string }) => (
     <svg className={className} viewBox="0 0 61 34" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M50.6667 20.5714C50.6667 26.8812 45.5479 32 39.2381 32H18.0952C11.7854 32 6.66667 26.8812 6.66667 20.5714V20.5714C6.66667 14.2616 11.7854 9.14285 18.0952 9.14285H45.6667" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>

@@ -11,6 +11,7 @@ import { ContactUsPage } from './pages/ContactUsPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { BillsPaymentPage } from './pages/BillsPaymentPage';
 import { FundTransferPage } from './pages/FundTransferPage';
+import { RegistrationSuccessPage } from './pages/RegistrationSuccessPage';
 import { Page } from './types';
 
 const App: React.FC = () => {
@@ -24,6 +25,10 @@ const App: React.FC = () => {
   const handleSignIn = useCallback(() => {
     setIsLoggedIn(true);
     setCurrentPage('home');
+  }, []);
+
+  const handleRegistration = useCallback(() => {
+    setCurrentPage('registration-success');
   }, []);
 
   const handleSignOut = useCallback(() => {
@@ -46,7 +51,9 @@ const App: React.FC = () => {
       case 'contact-us':
         return <ContactUsPage />;
       case 'register':
-        return <RegisterPage setCurrentPage={setCurrentPage} onSignIn={handleSignIn} onOpenTerms={openTermsModal} />;
+        return <RegisterPage setCurrentPage={setCurrentPage} onRegister={handleRegistration} onOpenTerms={openTermsModal} />;
+      case 'registration-success':
+        return <RegistrationSuccessPage />;
       case 'bills-payment':
         return <BillsPaymentPage setCurrentPage={setCurrentPage} />;
       case 'fund-transfer':
@@ -62,10 +69,10 @@ const App: React.FC = () => {
   }
 
 
-  if (currentPage === 'register') {
+  if (currentPage === 'register' || currentPage === 'registration-success') {
     return (
       <>
-        <RegisterPage setCurrentPage={setCurrentPage} onSignIn={handleSignIn} onOpenTerms={openTermsModal} />
+        {renderPage()}
         <TermsOfServiceModal isOpen={isTermsModalOpen} onClose={closeTermsModal} />
       </>
     );
@@ -95,7 +102,20 @@ const Footer: React.FC<{ setCurrentPage: (page: Page) => void; currentPage: Page
     return (
         <footer className={`${footerBgClass} border-t border-gray-200`}>
             <div className={`container mx-auto px-6 py-8 text-center ${textColorClass} text-sm`}>
-            
+            <div className="flex justify-center space-x-6 mb-4">
+                    <a 
+                        href="#" 
+                        onClick={(e) => { e.preventDefault(); onOpenTerms(); }}
+                        className="hover:text-bpi-red transition-colors">
+                        Terms of Service
+                    </a>
+                    <a 
+                        href="#" 
+                        onClick={(e) => { e.preventDefault(); setCurrentPage('contact-us'); }}
+                        className="hover:text-bpi-red transition-colors">
+                        Contact Us
+                    </a>
+                </div>
                 <p>&copy; {new Date().getFullYear()} BPI. All Rights Reserved.</p>
                 
             </div>
