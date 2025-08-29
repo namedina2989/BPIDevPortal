@@ -397,6 +397,56 @@ const BillsPaymentApiContract: React.FC = () => {
     );
 };
 
+const billsPaymentHistoryData = [
+    {
+        version: "v2.0.16",
+        date: "March 15, 2024",
+        description: "Added support for new biller categories and enhanced the validation for reference numbers to reduce payment errors.",
+    },
+    {
+        version: "v2.0.15",
+        date: "January 10, 2024",
+        description: "Implemented additional security checks and improved the error messaging for failed transactions.",
+    },
+    {
+        version: "v2.0.14",
+        date: "November 05, 2023",
+        description: "Initial release of the Partner Bills Payment API, enabling third-party partners to facilitate bill payments.",
+    },
+];
+
+const BillsPaymentApiHistory: React.FC = () => {
+    return (
+        <div className="bg-gray-50 py-12">
+            <div className="container mx-auto px-6">
+                <div className="bg-white p-8 rounded-lg shadow-md max-w-4xl mx-auto">
+                    <h1 className="text-3xl font-bold text-gray-900 mb-8 pb-4 border-b">Partner Bills Payment - API Version History</h1>
+                    <div className="space-y-8">
+                        {billsPaymentHistoryData.map((item, index) => (
+                            <div key={index} className="flex flex-col sm:flex-row gap-6">
+                                <div className="sm:w-1/4">
+                                    <div className="flex items-center">
+                                        <span className={`text-lg font-bold ${index === 0 ? 'text-bpi-red' : 'text-gray-800'}`}>{item.version}</span>
+                                        {index === 0 && <span className="ml-3 bg-green-100 text-green-800 text-xs font-medium px-2.5 py-1 rounded-full">Latest</span>}
+                                    </div>
+                                    <p className="text-sm text-gray-500 mt-1">{item.date}</p>
+                                </div>
+                                <div className="sm:w-3/4">
+                                    <p className="text-gray-700 leading-relaxed">{item.description}</p>
+                                    <button className="mt-3 text-sm font-semibold text-bpi-red hover:underline">
+                                        View Documentation &rarr;
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+
 export const BillsPaymentPage: React.FC<BillsPaymentPageProps> = ({ setCurrentPage }) => {
     const [activeTab, setActiveTab] = useState('documentation');
 
@@ -445,6 +495,16 @@ export const BillsPaymentPage: React.FC<BillsPaymentPageProps> = ({ setCurrentPa
                         >
                             API Contract
                         </button>
+                        <button
+                            onClick={() => setActiveTab('history')}
+                            className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+                                activeTab === 'history'
+                                    ? 'border-bpi-red text-bpi-red'
+                                    : 'border-transparent text-gray-500 hover:text-gray-800 hover:border-gray-300'
+                            }`}
+                        >
+                            History
+                        </button>
                     </nav>
                 </div>
             </div>
@@ -452,6 +512,7 @@ export const BillsPaymentPage: React.FC<BillsPaymentPageProps> = ({ setCurrentPa
             {activeTab === 'documentation' && <BillsPaymentDocumentation />}
             {activeTab === 'playground' && <ApiPlayground />}
             {activeTab === 'contract' && <BillsPaymentApiContract />}
+            {activeTab === 'history' && <BillsPaymentApiHistory />}
         </main>
     );
 };
